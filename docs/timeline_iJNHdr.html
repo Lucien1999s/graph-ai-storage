@@ -1,0 +1,200 @@
+
+    <!DOCTYPE html>
+    <html lang="zh-TW">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Lucien 的一天學習流程</title>  <!-- 動態設置頁面標題 -->
+        <style>
+            body, html {
+                height: 100%;
+                margin: 0;
+                display: flex;
+                flex-direction: column;
+                background-color: #FAF0E6; /* 設定整體背景色 */
+            }
+
+            .title {
+                font-size: 40px;  /* 增大主標題字體 */
+                font-weight: bold;
+                text-align: center;
+                margin: 30px 0;  /* 增大間距 */
+            }
+
+            .container {
+                flex-grow: 1;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 100%;
+            }
+
+            .line-container {
+                display: flex;
+                align-items: center;
+                width: 100%;
+            }
+
+            .line {
+                flex-grow: 1;
+                border-top: 3px solid black;  /* 加粗時間線 */
+                margin: 0;
+            }
+
+            .rectangle-container {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                position: relative;
+                width: auto;
+            }
+
+            .rectangle {
+                width: 120px;    /* 增大方框寬度 */
+                height: 60px;    /* 增大方框高度 */
+                border: 3px solid black;  /* 加粗方框邊框 */
+                box-sizing: border-box;
+                margin: 0;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-size: 18px;  /* 增大方框內文字 */
+            }
+
+            .vertical-line {
+                width: 3px;     /* 加粗垂直線 */
+                height: 150px;  /* 增加垂直線高度 */
+                background-color: black;
+                position: absolute;
+            }
+
+            .up {
+                top: -150px;    /* 調整垂直線位置 */
+            }
+
+            .down {
+                bottom: -150px; /* 調整垂直線位置 */
+            }
+
+            /* 新增文字的樣式 */
+            .text-above-line {
+                position: absolute;
+                text-align: center;
+                white-space: normal;
+                width: 400%;   /* 增加文字區域寬度 */
+                max-width: 1000px;
+                padding: 10px;  /* 增加內邊距 */
+            }
+
+            .up-text {
+                top: -230px;    /* 調整文字位置 */
+            }
+
+            .down-text {
+                bottom: -230px; /* 調整文字位置 */
+            }
+
+            /* 標題和內文樣式 */
+            .title-text {
+                font-size: 20px;   /* 增大標題字體 */
+                font-weight: bold;
+                margin-bottom: 5px; /* 增加標題和內容間距 */
+            }
+
+            .body-text {
+                font-size: 18px;    /* 增大內文字體 */
+            }
+        </style>
+    </head>
+    <body>
+
+    <div class="title">Lucien 的一天學習流程</div>  <!-- 動態設置頁面內部標題 -->
+
+    <div class="container">
+        <div class="line-container" id="lineContainer">
+            <!-- 長方形將動態插入 -->
+        </div>
+    </div>
+
+    <script>
+        function createRectangles(textList, dataList, count) {
+            if (count < 3) count = 3;
+            if (count > 10) count = 10;
+
+            const lineContainer = document.getElementById('lineContainer');
+            lineContainer.innerHTML = '';
+
+            for (let i = 0; i < count; i++) {
+                const line = document.createElement('div');
+                line.className = 'line';
+                lineContainer.appendChild(line);
+
+                const rectangleContainer = document.createElement('div');
+                rectangleContainer.className = 'rectangle-container';
+
+                const verticalLine = document.createElement('div');
+                verticalLine.className = 'vertical-line';
+
+                if (i % 2 === 0) {
+                    verticalLine.classList.add('up');
+
+                    const textAboveLine = document.createElement('div');
+                    textAboveLine.className = 'text-above-line up-text';
+
+                    const title = document.createElement('div');
+                    title.className = 'title-text';
+                    title.textContent = dataList[i].title;
+
+                    const body = document.createElement('div');
+                    body.className = 'body-text';
+                    body.textContent = dataList[i].content;
+
+                    textAboveLine.appendChild(title);
+                    textAboveLine.appendChild(body);
+
+                    rectangleContainer.appendChild(textAboveLine);
+                } else {
+                    verticalLine.classList.add('down');
+
+                    const textAboveLine = document.createElement('div');
+                    textAboveLine.className = 'text-above-line down-text';
+
+                    const title = document.createElement('div');
+                    title.className = 'title-text';
+                    title.textContent = dataList[i].title;
+
+                    const body = document.createElement('div');
+                    body.className = 'body-text';
+                    body.textContent = dataList[i].content;
+
+                    textAboveLine.appendChild(title);
+                    textAboveLine.appendChild(body);
+
+                    rectangleContainer.appendChild(textAboveLine);
+                }
+
+                rectangleContainer.appendChild(verticalLine);
+
+                const rectangle = document.createElement('div');
+                rectangle.className = 'rectangle';
+                rectangle.textContent = textList[i];
+
+                rectangleContainer.appendChild(rectangle);
+                lineContainer.appendChild(rectangleContainer);
+            }
+
+            const lastLine = document.createElement('div');
+            lastLine.className = 'line';
+            lineContainer.appendChild(lastLine);
+        }
+
+        const textList = ["早上", "上午", "中午", "下午", "晚上"];
+        const dataList = [{"title": "早上", "content": "學習語言和運動"}, {"title": "上午", "content": "寫程式工作"}, {"title": "中午", "content": "閱讀 AI 論文"}, {"title": "下午", "content": "開會和討論開發項目"}, {"title": "晚上", "content": "閱讀各種書籍和陪伴家人"}];
+        const count = 5;
+
+        createRectangles(textList, dataList, count);
+    </script>
+
+    </body>
+    </html>
+    
