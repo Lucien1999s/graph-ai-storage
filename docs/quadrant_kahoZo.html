@@ -1,0 +1,176 @@
+
+    <!DOCTYPE html>
+    <html lang="zh-TW">
+    <head>
+        <meta charset="UTF-8">
+        <title>"重要性與緊急性四象限圖"</title>
+        <style>
+            body, html {
+                height: 100%;
+                margin: 0;
+                display: flex;
+                flex-direction: column;
+                background-color: #FAF0E6;
+                overflow: hidden; /* 防止滾動條出現 */
+            }
+
+            .title {
+                font-size: 40px; /* 主標題字體適當放大 */
+                font-weight: bold;
+                text-align: center;
+                margin: 20px 0; /* 調整間距 */
+            }
+
+            .quadrant-container {
+                flex-grow: 1;
+                position: relative;
+                width: 80%;
+                margin: 0 auto;
+                max-height: calc(100vh - 140px); /* 保持象限圖高度可見，避免滾動條 */
+            }
+
+            .quadrant-table {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                grid-template-rows: 1fr 1fr;
+                width: 100%;
+                height: 100%;
+                border-collapse: collapse;
+                position: relative;
+            }
+
+            .quadrant-cell {
+                border: 2px solid black;
+                box-sizing: border-box;
+                overflow: auto; /* 當內容超出時，啟用滾動條 */
+                position: relative;
+                padding: 15px; /* 調整內邊距 */
+            }
+
+            /* 移除外框線 */
+            .quadrant-cell:nth-child(1),
+            .quadrant-cell:nth-child(2) {
+                border-top: transparent;
+            }
+
+            .quadrant-cell:nth-child(1),
+            .quadrant-cell:nth-child(3) {
+                border-left: transparent;
+            }
+
+            .quadrant-cell:nth-child(2),
+            .quadrant-cell:nth-child(4) {
+                border-right: transparent;
+            }
+
+            .quadrant-cell:nth-child(3),
+            .quadrant-cell:nth-child(4) {
+                border-bottom: transparent;
+            }
+
+            /* 軸標籤樣式 */
+            .x-axis-label, .y-axis-label {
+                position: absolute;
+                font-size: 22px; /* 增大軸標籤字體 */
+                font-weight: bold;
+                background-color: #FAF0E6;
+                padding: 5px;
+            }
+
+            .x-axis-label {
+                bottom: -35px; /* 調整位置，保持在頁面內 */
+                left: 50%;
+                transform: translateX(-50%);
+            }
+
+            .y-axis-label {
+                top: 50%;
+                left: -60px; /* 調整位置，避免過多佔用空間 */
+                transform: translateY(-50%) rotate(-90deg);
+            }
+
+            /* 象限標題樣式 */
+            .quadrant-title {
+                font-size: 20px; /* 略微增大象限標題字體 */
+                font-weight: bold;
+                margin-bottom: 10px;
+            }
+
+            /* 象限內容樣式 */
+            .quadrant-content {
+                font-size: 18px; /* 調整象限內容字體 */
+            }
+        </style>
+    </head>
+    <body>
+
+    <div class="title" id="mainTitle"></div>
+
+    <div class="quadrant-container">
+        <!-- 軸標籤 -->
+        <div class="x-axis-label" id="xAxisLabel"></div>
+        <div class="y-axis-label" id="yAxisLabel"></div>
+
+        <div class="quadrant-table">
+            <div class="quadrant-cell">
+                <div class="quadrant-title" id="quadrantTitle1"></div>
+                <ul class="quadrant-content" id="quadrantContent1">
+                    <!-- 內容將通過JavaScript動態插入 -->
+                </ul>
+            </div>
+            <div class="quadrant-cell">
+                <div class="quadrant-title" id="quadrantTitle2"></div>
+                <ul class="quadrant-content" id="quadrantContent2">
+                    <!-- 內容將通過JavaScript動態插入 -->
+                </ul>
+            </div>
+            <div class="quadrant-cell">
+                <div class="quadrant-title" id="quadrantTitle3"></div>
+                <ul class="quadrant-content" id="quadrantContent3">
+                    <!-- 內容將通過JavaScript動態插入 -->
+                </ul>
+            </div>
+            <div class="quadrant-cell">
+                <div class="quadrant-title" id="quadrantTitle4"></div>
+                <ul class="quadrant-content" id="quadrantContent4">
+                    <!-- 內容將通過JavaScript動態插入 -->
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 定義一個函數，用於生成四象限圖
+        function createQuadrantChart(mainTitle, xAxisLabel, yAxisLabel, quadrantTitles, quadrantContents) {
+            // 設置主標題
+            document.getElementById('mainTitle').textContent = mainTitle;
+
+            // 設置軸標籤
+            document.getElementById('xAxisLabel').textContent = xAxisLabel;
+            document.getElementById('yAxisLabel').textContent = yAxisLabel;
+
+            // 遍歷四個象限，設置標題和內容
+            for (let i = 1; i <= 4; i++) {
+                // 設置象限標題
+                document.getElementById('quadrantTitle' + i).textContent = quadrantTitles[i - 1];
+
+                // 獲取象限內容的容器
+                let contentList = document.getElementById('quadrantContent' + i);
+                contentList.innerHTML = ''; // 清空內容
+
+                // 插入列表項
+                quadrantContents[i - 1].forEach(item => {
+                    let li = document.createElement('li');
+                    li.textContent = item;
+                    contentList.appendChild(li);
+                });
+            }
+        }
+
+        // 調用函數生成四象限圖
+        createQuadrantChart("重要性與緊急性四象限圖", "重要性", "緊急性", ["象限一：重要且緊急", "象限二：重要但不緊急", "象限三：不重要但緊急", "象限四：不重要且不緊急"], [["處理客戶投訴", "解決系統故障"], ["制定長期戰略", "員工培訓"], ["參加無關的會議", "處理部分郵件"], ["瀏覽社交媒體", "娛樂活動"]]);
+    </script>
+
+    </body>
+    </html>
+    
