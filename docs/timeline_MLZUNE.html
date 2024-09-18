@@ -1,0 +1,200 @@
+
+    <!DOCTYPE html>
+    <html lang="zh-TW">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Taiwan Major Events 2014-2024</title>  <!-- 動態設置頁面標題 -->
+        <style>
+            body, html {
+                height: 100%;
+                margin: 0;
+                display: flex;
+                flex-direction: column;
+                background-color: #FAF0E6; /* 設定整體背景色 */
+            }
+
+            .title {
+                font-size: 40px;  /* 增大主標題字體 */
+                font-weight: bold;
+                text-align: center;
+                margin: 30px 0;  /* 增大間距 */
+            }
+
+            .container {
+                flex-grow: 1;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 100%;
+            }
+
+            .line-container {
+                display: flex;
+                align-items: center;
+                width: 100%;
+            }
+
+            .line {
+                flex-grow: 1;
+                border-top: 3px solid black;  /* 加粗時間線 */
+                margin: 0;
+            }
+
+            .rectangle-container {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                position: relative;
+                width: auto;
+            }
+
+            .rectangle {
+                width: 120px;    /* 增大方框寬度 */
+                height: 60px;    /* 增大方框高度 */
+                border: 3px solid black;  /* 加粗方框邊框 */
+                box-sizing: border-box;
+                margin: 0;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-size: 18px;  /* 增大方框內文字 */
+            }
+
+            .vertical-line {
+                width: 3px;     /* 加粗垂直線 */
+                height: 150px;  /* 增加垂直線高度 */
+                background-color: black;
+                position: absolute;
+            }
+
+            .up {
+                top: -150px;    /* 調整垂直線位置 */
+            }
+
+            .down {
+                bottom: -150px; /* 調整垂直線位置 */
+            }
+
+            /* 新增文字的樣式 */
+            .text-above-line {
+                position: absolute;
+                text-align: center;
+                white-space: normal;
+                width: 400%;   /* 增加文字區域寬度 */
+                max-width: 1000px;
+                padding: 10px;  /* 增加內邊距 */
+            }
+
+            .up-text {
+                top: -230px;    /* 調整文字位置 */
+            }
+
+            .down-text {
+                bottom: -230px; /* 調整文字位置 */
+            }
+
+            /* 標題和內文樣式 */
+            .title-text {
+                font-size: 20px;   /* 增大標題字體 */
+                font-weight: bold;
+                margin-bottom: 5px; /* 增加標題和內容間距 */
+            }
+
+            .body-text {
+                font-size: 18px;    /* 增大內文字體 */
+            }
+        </style>
+    </head>
+    <body>
+
+    <div class="title">Taiwan Major Events 2014-2024</div>  <!-- 動態設置頁面內部標題 -->
+
+    <div class="container">
+        <div class="line-container" id="lineContainer">
+            <!-- 長方形將動態插入 -->
+        </div>
+    </div>
+
+    <script>
+        function createRectangles(textList, dataList, count) {
+            if (count < 3) count = 3;
+            if (count > 10) count = 10;
+
+            const lineContainer = document.getElementById('lineContainer');
+            lineContainer.innerHTML = '';
+
+            for (let i = 0; i < count; i++) {
+                const line = document.createElement('div');
+                line.className = 'line';
+                lineContainer.appendChild(line);
+
+                const rectangleContainer = document.createElement('div');
+                rectangleContainer.className = 'rectangle-container';
+
+                const verticalLine = document.createElement('div');
+                verticalLine.className = 'vertical-line';
+
+                if (i % 2 === 0) {
+                    verticalLine.classList.add('up');
+
+                    const textAboveLine = document.createElement('div');
+                    textAboveLine.className = 'text-above-line up-text';
+
+                    const title = document.createElement('div');
+                    title.className = 'title-text';
+                    title.textContent = dataList[i].title;
+
+                    const body = document.createElement('div');
+                    body.className = 'body-text';
+                    body.textContent = dataList[i].content;
+
+                    textAboveLine.appendChild(title);
+                    textAboveLine.appendChild(body);
+
+                    rectangleContainer.appendChild(textAboveLine);
+                } else {
+                    verticalLine.classList.add('down');
+
+                    const textAboveLine = document.createElement('div');
+                    textAboveLine.className = 'text-above-line down-text';
+
+                    const title = document.createElement('div');
+                    title.className = 'title-text';
+                    title.textContent = dataList[i].title;
+
+                    const body = document.createElement('div');
+                    body.className = 'body-text';
+                    body.textContent = dataList[i].content;
+
+                    textAboveLine.appendChild(title);
+                    textAboveLine.appendChild(body);
+
+                    rectangleContainer.appendChild(textAboveLine);
+                }
+
+                rectangleContainer.appendChild(verticalLine);
+
+                const rectangle = document.createElement('div');
+                rectangle.className = 'rectangle';
+                rectangle.textContent = textList[i];
+
+                rectangleContainer.appendChild(rectangle);
+                lineContainer.appendChild(rectangleContainer);
+            }
+
+            const lastLine = document.createElement('div');
+            lastLine.className = 'line';
+            lineContainer.appendChild(lastLine);
+        }
+
+        const textList = ["2014: Sunflower Movement", "2016: Tsai Ing-wen Elected President", "2017: Constitutional Court Ruling on Same-Sex Marriage", "2019: Legalization of Same-Sex Marriage", "2020: COVID-19 Pandemic", "2020: Tsai Ing-wen"s Re-election", "2021: Development of Medigen Vaccine", "2022: Nine-in-One Local Elections", "2023: Growth of Semiconductor Industry", "2024: Upcoming Presidential Election"];
+        const dataList = [{"title": "2014: Sunflower Movement", "content": "The Sunflower Student Movement protests against the Cross-Strait Service Trade Agreement, marking a significant shift in Taiwan"s political landscape."}, {"title": "2016: Tsai Ing-wen Elected President", "content": "Tsai Ing-wen becomes Taiwan"s first female president, pushing forward domestic reforms and bolstering Taiwan"s global standing."}, {"title": "2017: Constitutional Court Ruling on Same-Sex Marriage", "content": "Taiwan"s Constitutional Court issues Interpretation No. 748, ruling that same-sex couples have the right to marry, paving the way for marriage equality."}, {"title": "2019: Legalization of Same-Sex Marriage", "content": "On May 24, 2019, Taiwan officially legalizes same-sex marriage, becoming the first country in Asia to do so."}, {"title": "2020: COVID-19 Pandemic", "content": "笑爛"}, {"title": "2020: Tsai Ing-wen"s Re-election", "content": "Tsai Ing-wen is re-elected in a landslide victory, continuing her administration"s policies."}, {"title": "2021: Development of Medigen Vaccine", "content": "Taiwan"s domestic Medigen vaccine receives emergency use authorization, playing a key role in its COVID-19 response."}, {"title": "2022: Nine-in-One Local Elections", "content": "The Kuomintang (KMT) secures a majority of local seats in the 2022 elections, shaping Taiwan"s political future."}, {"title": "2023: Growth of Semiconductor Industry", "content": "Taiwan continues to lead the global semiconductor industry, with TSMC dominating international markets."}, {"title": "2024: Upcoming Presidential Election", "content": "Taiwan is set to hold its next presidential election, which may significantly influence its future political and economic trajectory."}];
+        const count = 10;
+
+        createRectangles(textList, dataList, count);
+    </script>
+
+    </body>
+    </html>
+    
